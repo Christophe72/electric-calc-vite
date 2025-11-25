@@ -2,7 +2,7 @@ import { useState } from "react";
 import { calibreDisjoncteur, intensite, puissance, resistance, tension } from "../utils/formulas";
 
 export default function Calculator() {
-  const [u, setU] = useState<string>("");
+  const [u, setU] = useState<string>("220");
   const [i, setI] = useState<string>("");
   const [p, setP] = useState<string>("");
   const [r, setR] = useState<string>("");
@@ -42,6 +42,11 @@ export default function Calculator() {
         : display.toFixed(2);
 
     return `${rounded} ${newUnit}`;
+  };
+
+  const handlePhaseChange = (next: "mono" | "tri") => {
+    setPhase(next);
+    setU(next === "mono" ? "220" : "380");
   };
 
   const handleCalc = (type: string) => {
@@ -105,7 +110,7 @@ export default function Calculator() {
               type="radio"
               value="mono"
               checked={phase === "mono"}
-              onChange={() => setPhase("mono")}
+              onChange={() => handlePhaseChange("mono")}
             />
             Monophase
           </label>
@@ -114,7 +119,7 @@ export default function Calculator() {
               type="radio"
               value="tri"
               checked={phase === "tri"}
-              onChange={() => setPhase("tri")}
+              onChange={() => handlePhaseChange("tri")}
             />
             Triphase
           </label>
@@ -124,7 +129,11 @@ export default function Calculator() {
       <div className="inputs">
         <label className="field">
           <span>U (V)</span>
-          <input placeholder="230" value={u} onChange={e => setU(e.target.value)} />
+          <input
+            placeholder={phase === "mono" ? "220" : "380"}
+            value={u}
+            onChange={e => setU(e.target.value)}
+          />
         </label>
         <label className="field">
           <span>I (A)</span>
