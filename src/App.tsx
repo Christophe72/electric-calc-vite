@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./styles/main.css";
 import Calculator from "./components/Calculator";
+import CalculElectriqueLonguer from "./components/CalculElectriqueLonguer";
 
 type Theme = "light" | "dark";
 
@@ -27,6 +28,7 @@ export default function App() {
       </header>
 
       <Calculator />
+      <CalculElectriqueLonguer />
     </div>
   );
 }
